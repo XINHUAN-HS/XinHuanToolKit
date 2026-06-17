@@ -1,0 +1,519 @@
+/* ===== 基础重置 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', monospace;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    color: #00ff41;
+}
+
+body {
+    position: relative;
+}
+
+/* 网格背景 */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(0, 100, 0, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 100, 0, 0.07) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: gridMove 10s linear infinite;
+    z-index: -1;
+}
+
+@keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 20px; }
+}
+
+/* 扫描线 */
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 65, 0.012) 2px,
+        rgba(0, 255, 65, 0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ===== 主容器 Grid ===== */
+.terminal-container {
+    display: grid;
+    grid-template-columns: 238px 1fr 278px;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    padding: 6px;
+    gap: 5px;
+}
+
+/* ===== 顶部栏 ===== */
+.top-bar {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 10px;
+    border-bottom: 1px solid #00ff41;
+    font-size: 13px;
+    animation: pulseBorder 3s ease-in-out infinite;
+}
+
+@keyframes pulseBorder {
+    0%, 100% { border-color: #00ff41; }
+    50% { border-color: #00ffff; }
+}
+
+.top-bar .logo {
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #00ff41;
+}
+
+.top-bar .status span {
+    margin-left: 12px;
+    animation: statusBlink 2s step-start infinite;
+}
+
+.top-bar .status span:nth-child(2) { animation-delay: 0.5s; }
+.top-bar .status span:nth-child(3) { animation-delay: 1s; }
+
+@keyframes statusBlink {
+    0%, 49% { opacity: 1; }
+    50%, 99% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* ===== 侧边栏通用 ===== */
+.sidebar {
+    background: rgba(0, 18, 0, 0.87);
+    border: 1px solid #00ff41;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    backdrop-filter: blur(2px);
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+/* ===== 左侧面板 ===== */
+.system-panel { grid-row: 2; }
+
+.panel-title {
+    text-align: center;
+    font-size: 14px;
+    color: #00ffff;
+    text-shadow: 0 0 8px #00ffff;
+    letter-spacing: 2px;
+    border-bottom: 1px dashed rgba(0, 255, 255, 0.3);
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+}
+
+.clock {
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff41;
+    margin: 4px 0;
+}
+
+.dynamic-group { margin: 5px 0; }
+
+.value-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 3px 0;
+}
+
+.metric-name {
+    margin-right: 8px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.blink {
+    animation: dataBlink 1.5s step-start infinite;
+}
+@keyframes dataBlink {
+    0%, 59% { opacity: 1; }
+    60%, 79% { opacity: 0.2; }
+    80%, 100% { opacity: 1; }
+}
+
+.chart-container {
+    height: 48px;
+    margin: 4px 0;
+    background: rgba(0, 32, 0, 0.3);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.chart-svg { width: 100%; height: 100%; }
+
+.chart-line {
+    stroke: #00ff41;
+    stroke-width: 1.5;
+    fill: none;
+    filter: drop-shadow(0 0 3px #00ff41);
+    stroke-dasharray: 700;
+    stroke-dashoffset: 0;
+    animation: dashFlow 4s linear infinite;
+}
+
+@keyframes dashFlow {
+    to { stroke-dashoffset: -700; }
+}
+
+.memory-bars { margin: 4px 0; }
+
+.memory-bar {
+    height: 7px;
+    background: #001a00;
+    margin: 3px 0;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+}
+
+.memory-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #003300, #00ff41);
+    transition: width 0.5s ease;
+}
+
+/* 网络数据 */
+.world-view {
+    height: 94px;
+    background: rgba(0, 10, 25, 0.8);
+    border: 1px solid #00ffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.globe {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 255, 255, 0.4);
+    animation: globeRotate 20s linear infinite;
+    position: relative;
+}
+
+@keyframes globeRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.globe::before {
+    content: "";
+    position: absolute;
+    top: -5%;
+    left: 50%;
+    width: 2px;
+    height: 110%;
+    background: rgba(0, 255, 255, 0.3);
+    transform: translateX(-50%);
+}
+
+.globe::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -5%;
+    width: 110%;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.3);
+    transform: translateY(-50%);
+}
+
+.network-info { font-size: 11px; margin: 4px 0; }
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.info-label { color: #00ffff; }
+.info-value { text-align: right; }
+
+.traffic-chart {
+    height: 48px;
+    margin: 4px 0;
+    background: rgba(0, 32, 0, 0.3);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.traffic-svg { width: 100%; height: 100%; }
+
+.traffic-line {
+    stroke: #00ff41;
+    stroke-width: 1.5;
+    fill: none;
+    filter: drop-shadow(0 0 3px #00ff41);
+    stroke-dasharray: 680;
+    stroke-dashoffset: 0;
+    animation: dashFlow 4s linear infinite;
+}
+
+/* ===== 中央终端 ===== */
+.main-terminal {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 8, 0, 0.97);
+    border: 1px solid #00ff41;
+    padding: 6px;
+    overflow: hidden;
+}
+
+.terminal-tabs {
+    display: flex;
+    border-bottom: 1px solid #00ff41;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.tab {
+    padding: 3px 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    font-size: 12px;
+    transition: all 0.2s;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.tab:hover {
+    background: rgba(0, 255, 65, 0.05);
+    text-shadow: 0 0 5px #00ff41;
+}
+
+.tab.active {
+    background: rgba(0, 255, 65, 0.1);
+    border-color: #00ff41;
+    border-bottom: 1px solid #00ff41;
+    color: #00ffff;
+}
+
+.tab .close-btn {
+    margin-left: 5px;
+    font-size: 10px;
+    color: #ff5555;
+    cursor: pointer;
+    opacity: 0.6;
+}
+.tab .close-btn:hover { opacity: 1; }
+
+.view-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.view-content {
+    display: none;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.view-content.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 终端视图 */
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 4px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    scrollbar-width: none;
+}
+.terminal-output::-webkit-scrollbar { display: none; }
+
+.terminal-input {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    padding-top: 3px;
+    border-top: 1px solid rgba(0, 255, 65, 0.3);
+}
+
+.prompt {
+    margin-right: 4px;
+    color: #00ffff;
+    animation: promptBlink 1s step-end infinite;
+}
+
+@keyframes promptBlink {
+    0%, 49% { opacity: 1; }
+    50%, 99% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #00ff41;
+    font-size: 13px;
+    outline: none;
+    caret-color: #00ff41;
+}
+
+/* 应用视图 */
+#appView { background: #000; }
+
+#appFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #000;
+}
+
+/* ===== 右侧文件系统 ===== */
+.filesystem-panel { grid-row: 2; }
+
+.file-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category {
+    background: rgba(0, 20, 0, 0.3);
+    border: 1px solid rgba(0, 255, 65, 0.12);
+    padding: 5px;
+}
+
+.cat-title {
+    font-size: 11px;
+    color: #00ffff;
+    text-shadow: 0 0 4px #00ffff;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.file-icons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.file-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 9px;
+    cursor: pointer;
+    padding: 3px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.file-icon:hover {
+    background: rgba(0, 255, 65, 0.1);
+    border-color: #00ff41;
+    text-shadow: 0 0 4px #00ff41;
+}
+
+.file-icon i { font-size: 15px; margin-bottom: 1px; }
+
+/* ===== 底部键盘 ===== */
+.bottom-panel {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    display: flex;
+    height: 128px; /* 固定高度，可调整 */
+}
+
+.keyboard {
+    background: rgba(0, 18, 0, 0.87);
+    border: 1px solid #00ff41;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    width: 100%;
+    height: 100%;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0;
+    flex: 1;
+    gap: 2px;
+}
+
+.key {
+    flex: 1;
+    min-width: 0;
+    background: rgba(0, 25, 0, 0.9);
+    border: 1px solid #00ff41;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    transition: all 0.1s;
+    user-select: none;
+    padding: 1px 0;
+}
+
+.key:hover {
+    background: rgba(0, 255, 65, 0.15);
+    box-shadow: 0 0 6px #00ff41;
+}
+
+.key.wide { flex: 1.5; }
+.key.extra-wide { flex: 2; }
+.key.space { flex: 4; }
+
+.key.active {
+    background: rgba(0, 255, 65, 0.4);
+    box-shadow: 0 0 10px #00ff41;
+    border-color: #00ffff;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 830px) {
+    .terminal-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr 1fr 1fr auto;
+    }
+    .system-panel, .main-terminal, .filesystem-panel {
+        grid-row: auto;
+    }
+    .bottom-panel { grid-column: 1; }
+}

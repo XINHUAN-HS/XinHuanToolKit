@@ -1,0 +1,40 @@
+{
+  "categories": [
+    {
+      "title": "系统目录",
+      "apps": [
+        { "name": "home", "label": "home", "icon": "📁", "category": "system" },
+        { "name": "etc", "label": "etc", "icon": "📁", "category": "system" },
+        { "name": "var", "label": "var", "icon": "📁", "category": "system" },
+        { "name": "usr", "label": "usr", "icon": "📁", "category": "system" }
+      ]
+    },
+    {
+      "title": "配置文件",
+      "apps": [
+        { "name": "config", "label": "config", "icon": "📄", "category": "config" },
+        { "name": "env", "label": "env", "icon": "📄", "category": "config" },
+        { "name": "tools", "label": "tools", "icon": "🔧", "category": "config" },
+        { "name": "settings", "label": "settings", "icon": "⚙️", "category": "config" }
+      ]
+    },
+    {
+      "title": "存储与备份",
+      "apps": [
+        { "name": "backup", "label": "backup", "icon": "📦", "category": "storage" },
+        { "name": "archive", "label": "archive", "icon": "🗃️", "category": "storage" },
+        { "name": "disk", "label": "disk", "icon": "💾", "category": "storage" },
+        { "name": "cloud", "label": "cloud", "icon": "☁️", "category": "storage" }
+      ]
+    },
+    {
+      "title": "临时与日志",
+      "apps": [
+        { "name": "log", "label": "log", "icon": "📄", "category": "logs" },
+        { "name": "trash", "label": "trash", "icon": "🗑️", "category": "logs" },
+        { "name": "temp", "label": "temp", "icon": "⏳", "category": "logs" },
+        { "name": "cache", "label": "cache", "icon": "🔄", "category": "logs" }
+      ]
+    }
+  ]
+}

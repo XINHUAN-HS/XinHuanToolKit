@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科幻终端工具箱</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="terminal-container">
+    <!-- 顶部栏 -->
+    <div class="top-bar">
+        <div class="logo">[ SYS_TERMINAL ]</div>
+        <div class="status">
+            <span>● 系统运行中</span>
+            <span>● 网络连接</span>
+            <span>● 安全防护</span>
+        </div>
+    </div>
+
+    <!-- 左侧系统面板 -->
+    <div class="sidebar system-panel">
+        <div class="panel-title">◆ 系统监控 ◆</div>
+        <div class="clock" id="clock">00:00:00</div>
+
+        <!-- CPU -->
+        <div class="dynamic-group">
+            <div class="chart-container">
+                <svg class="chart-svg" viewBox="0 0 260 66">
+                    <polyline class="chart-line" points="0,40 20,30 40,38 60,22 80,28 100,18 120,33 140,12 160,24 180,8 200,16 220,5 240,12 260,10"/>
+                </svg>
+            </div>
+            <div class="value-row">
+                <span class="metric-name">CPU</span>
+                <span class="blink" id="cpuUsage">45%</span>
+            </div>
+        </div>
+
+        <!-- 内存 -->
+        <div class="dynamic-group">
+            <div class="chart-container">
+                <svg class="chart-svg" viewBox="0 0 260 66">
+                    <polyline class="chart-line" points="0,46 20,34 40,43 60,27 80,33 100,19 120,37 140,15 160,28 180,10 200,20 225,7 245,14 260,18"/>
+                </svg>
+            </div>
+            <div class="memory-bars">
+                <div class="memory-bar"><div class="memory-fill" style="width:67%" id="memBar"></div></div>
+            </div>
+            <div class="value-row">
+                <span class="metric-name">内存</span>
+                <span class="blink" id="memUsage">67%</span>
+            </div>
+        </div>
+
+        <!-- 磁盘 -->
+        <div class="dynamic-group">
+            <div class="chart-container">
+                <svg class="chart-svg" viewBox="0 0 260 66">
+                    <polyline class="chart-line" points="0,54 20,47 40,51 60,38 82,44 102,29 122,48 142,22 162,36 182,14 204,25 224,8 244,16 262,20"/>
+                </svg>
+            </div>
+            <div class="memory-bars">
+                <div class="memory-bar"><div class="memory-fill" style="width:34%" id="diskBar"></div></div>
+            </div>
+            <div class="value-row">
+                <span class="metric-name">磁盘</span>
+                <span class="blink" id="diskUsage">34%</span>
+            </div>
+        </div>
+
+        <!-- 网络数据 -->
+        <div class="panel-title" style="margin-top:12px;">◆ 网络拓扑 ◆</div>
+        <div class="world-view">
+            <div class="globe"></div>
+        </div>
+        <div class="network-info">
+            <div class="info-grid">
+                <span class="info-label">外网 IP</span>
+                <span class="info-value">203.0.113.42</span>
+                <span class="info-label">内网 IP</span>
+                <span class="info-value">10.0.0.5</span>
+                <span class="info-label">网关</span>
+                <span class="info-value">10.0.0.1</span>
+                <span class="info-label">DNS</span>
+                <span class="info-value">8.8.8.8</span>
+            </div>
+            <div class="info-row"><span>上行流量</span><span>1.2 MB/s</span></div>
+            <div class="info-row"><span>下行流量</span><span>3.7 MB/s</span></div>
+        </div>
+        <div class="traffic-chart">
+            <svg class="traffic-svg" viewBox="0 0 270 76">
+                <polyline class="traffic-line" points="0,58 20,46 40,53 61,36 81,42 101,28 121,47 141,22 161,35 181,14 201,25 221,10 241,18 261,8 271,12"/>
+            </svg>
+        </div>
+        <div class="info-row"><span>活跃连接</span><span>23</span></div>
+        <div class="info-row"><span>开放端口</span><span>22, 80, 443</span></div>
+    </div>
+
+    <!-- 中央区域 -->
+    <div class="main-terminal">
+        <div class="terminal-tabs" id="tabContainer">
+            <div class="tab active" data-tab="terminal">本地终端</div>
+        </div>
+        <div class="view-container" id="viewContainer">
+            <div class="view-content active" id="terminalView">
+                <div class="terminal-output" id="terminalOutput">
+root@cyber:~$ █
+                </div>
+                <div class="terminal-input">
+                    <span class="prompt">$</span>
+                    <input type="text" class="input-field" id="commandInput" placeholder="输入命令...">
+                </div>
+            </div>
+            <div class="view-content" id="appView">
+                <iframe id="appFrame" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧文件系统面板（由 JS 动态生成） -->
+    <div class="sidebar filesystem-panel">
+        <div class="panel-title">◆ 文件系统 ◆</div>
+        <div id="fileCategories"></div>
+    </div>
+
+    <!-- 底部键盘 -->
+    <div class="bottom-panel">
+        <div class="keyboard" id="keyboard">
+            <div class="keyboard-row">
+                <div class="key" data-key="`">`</div>
+                <div class="key" data-key="1">1</div>
+                <div class="key" data-key="2">2</div>
+                <div class="key" data-key="3">3</div>
+                <div class="key" data-key="4">4</div>
+                <div class="key" data-key="5">5</div>
+                <div class="key" data-key="6">6</div>
+                <div class="key" data-key="7">7</div>
+                <div class="key" data-key="8">8</div>
+                <div class="key" data-key="9">9</div>
+                <div class="key" data-key="0">0</div>
+                <div class="key" data-key="-">-</div>
+                <div class="key" data-key="=">=</div>
+                <div class="key wide" data-key="Backspace">⌫</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key wide" data-key="Tab">Tab</div>
+                <div class="key" data-key="q">Q</div>
+                <div class="key" data-key="w">W</div>
+                <div class="key" data-key="e">E</div>
+                <div class="key" data-key="r">R</div>
+                <div class="key" data-key="t">T</div>
+                <div class="key" data-key="y">Y</div>
+                <div class="key" data-key="u">U</div>
+                <div class="key" data-key="i">I</div>
+                <div class="key" data-key="o">O</div>
+                <div class="key" data-key="p">P</div>
+                <div class="key" data-key="[">[</div>
+                <div class="key" data-key="]">]</div>
+                <div class="key wide" data-key="\">\</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key extra-wide" data-key="CapsLock">Caps</div>
+                <div class="key" data-key="a">A</div>
+                <div class="key" data-key="s">S</div>
+                <div class="key" data-key="d">D</div>
+                <div class="key" data-key="f">F</div>
+                <div class="key" data-key="g">G</div>
+                <div class="key" data-key="h">H</div>
+                <div class="key" data-key="j">J</div>
+                <div class="key" data-key="k">K</div>
+                <div class="key" data-key="l">L</div>
+                <div class="key" data-key=";">;</div>
+                <div class="key" data-key="'">'</div>
+                <div class="key wide" data-key="Enter">↵</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key extra-wide" data-key="ShiftLeft">Shift</div>
+                <div class="key" data-key="z">Z</div>
+                <div class="key" data-key="x">X</div>
+                <div class="key" data-key="c">C</div>
+                <div class="key" data-key="v">V</div>
+                <div class="key" data-key="b">B</div>
+                <div class="key" data-key="n">N</div>
+                <div class="key" data-key="m">M</div>
+                <div class="key" data-key=",">,</div>
+                <div class="key" data-key=".">.</div>
+                <div class="key" data-key="/">/</div>
+                <div class="key extra-wide" data-key="ShiftRight">Shift</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="key" data-key="ControlLeft">Ctrl</div>
+                <div class="key" data-key="MetaLeft">Win</div>
+                <div class="key" data-key="AltLeft">Alt</div>
+                <div class="key space" data-key="Space"></div>
+                <div class="key" data-key="AltRight">Alt</div>
+                <div class="key" data-key="MetaRight">Win</div>
+                <div class="key" data-key="ContextMenu">Fn</div>
+                <div class="key" data-key="ControlRight">Ctrl</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
