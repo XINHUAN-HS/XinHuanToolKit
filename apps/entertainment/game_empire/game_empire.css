@@ -1,2 +1,8 @@
-/* 黑客帝国文字雨 样式 */
-.content { line-height: 1.6; }
+   body {
+        background: #000 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace !important;
+        margin: 0;
+        overflow: hidden;
+    }
+    a { color: #00ffff; }
