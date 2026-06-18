@@ -124,8 +124,8 @@ function showHelp() {
         '  clear                         - 清屏\n' +
         '  open [类别] [应用名]          - 打开指定应用\n' +
         '  close [类别] [应用名]         - 关闭指定应用\n' +
-        '例如: open system home\n' +
-        '       close system home'
+        '例如: open JSON JSON格式化\n' +
+        '     close JSON JSON格式化'
     );
 }
 
