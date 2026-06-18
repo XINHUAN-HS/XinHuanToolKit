@@ -249,7 +249,7 @@ function createAppIframe(name, category) {
     iframe.dataset.appName = name;
     
     // 设置 src
-    const url = `./apps/${category}/${name}.html`;
+    const url = `./apps/${category}/${name}/${name}.html`;
     iframe.src = url;
     
     // 添加到 appView 中

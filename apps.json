@@ -1,39 +1,281 @@
 {
   "categories": [
     {
-      "title": "系统目录",
+      "title": "JSON",
       "apps": [
-        { "name": "home", "label": "home", "icon": "📁", "category": "system" },
-        { "name": "etc", "label": "etc", "icon": "📁", "category": "system" },
-        { "name": "var", "label": "var", "icon": "📁", "category": "system" },
-        { "name": "usr", "label": "usr", "icon": "📁", "category": "system" }
+        { "name": "json_format", "label": "JSON格式化", "icon": "📝", "category": "json" },
+        { "name": "json_convert", "label": "JSON转义", "icon": "🔄", "category": "json" },
+        { "name": "json_to_url", "label": "JSON与URL参数互转", "icon": "🔗", "category": "json" },
+        { "name": "json_to_ts", "label": "JSON生成TypeScript", "icon": "🅰️", "category": "json" }
       ]
     },
     {
-      "title": "配置文件",
+      "title": "格式化",
       "apps": [
-        { "name": "config", "label": "config", "icon": "📄", "category": "config" },
-        { "name": "env", "label": "env", "icon": "📄", "category": "config" },
-        { "name": "tools", "label": "tools", "icon": "🔧", "category": "config" },
-        { "name": "settings", "label": "settings", "icon": "⚙️", "category": "config" }
+        { "name": "html_format", "label": "HTML格式化", "icon": "🌐", "category": "format" },
+        { "name": "js_format", "label": "JavaScript格式化", "icon": "🅹", "category": "format" },
+        { "name": "css_format", "label": "CSS格式化", "icon": "🎨", "category": "format" },
+        { "name": "xml_format", "label": "XML格式化", "icon": "📄", "category": "format" },
+        { "name": "sql_format", "label": "SQL格式化", "icon": "🗃️", "category": "format" },
+        { "name": "c_format", "label": "C格式化", "icon": "©️", "category": "format" },
+        { "name": "cpp_format", "label": "C++格式化", "icon": "➕", "category": "format" },
+        { "name": "csharp_format", "label": "C#格式化", "icon": "♯", "category": "format" },
+        { "name": "java_format", "label": "Java格式化", "icon": "☕", "category": "format" },
+        { "name": "php_format", "label": "PHP格式化", "icon": "🐘", "category": "format" },
+        { "name": "python_format", "label": "Python格式化", "icon": "🐍", "category": "format" },
+        { "name": "yaml_format", "label": "Yaml格式化", "icon": "📜", "category": "format" },
+        { "name": "nginx_format", "label": "Nginx格式化", "icon": "⚙️", "category": "format" }
       ]
     },
     {
-      "title": "存储与备份",
+      "title": "URL",
       "apps": [
-        { "name": "backup", "label": "backup", "icon": "📦", "category": "storage" },
-        { "name": "archive", "label": "archive", "icon": "🗃️", "category": "storage" },
-        { "name": "disk", "label": "disk", "icon": "💾", "category": "storage" },
-        { "name": "cloud", "label": "cloud", "icon": "☁️", "category": "storage" }
+        { "name": "url_param_format", "label": "URL参数格式化", "icon": "🛠️", "category": "url" },
+        { "name": "url_json_convert", "label": "URL参数与JSON互转", "icon": "🔄", "category": "url" },
+        { "name": "url_encode", "label": "URL编解码", "icon": "🔡", "category": "url" },
+        { "name": "url_escape", "label": "URL编码解码(js方式)", "icon": "💻", "category": "url" },
+        { "name": "url_batch", "label": "URL批量生成器", "icon": "📋", "category": "url" }
       ]
     },
     {
-      "title": "临时与日志",
+      "title": "编码与解码",
       "apps": [
-        { "name": "log", "label": "log", "icon": "📄", "category": "logs" },
-        { "name": "trash", "label": "trash", "icon": "🗑️", "category": "logs" },
-        { "name": "temp", "label": "temp", "icon": "⏳", "category": "logs" },
-        { "name": "cache", "label": "cache", "icon": "🔄", "category": "logs" }
+        { "name": "char_encode", "label": "字符编码解码", "icon": "🔠", "category": "encode" },
+        { "name": "gbk_utf8", "label": "Unicode与中文编码解码", "icon": "🔣", "category": "encode" },
+        { "name": "punycode", "label": "Punycode编码解码", "icon": "🌐", "category": "encode" },
+        { "name": "qp_decode", "label": "Quoted-Printable编码解码", "icon": "📧", "category": "encode" },
+        { "name": "base16_convert", "label": "Base16/32/62/64/85转换", "icon": "🔢", "category": "encode" },
+        { "name": "ieee_754", "label": "IEEE754浮点数转换", "icon": "🔢", "category": "encode" },
+        { "name": "binary_convert", "label": "进制转换(正整型)", "icon": "➕", "category": "encode" },
+        { "name": "binary_convert_neg", "label": "进制转换(负整型)", "icon": "➖", "category": "encode" },
+        { "name": "binary_convert_big", "label": "进制转换(BigInt)", "icon": "⛓️", "category": "encode" },
+        { "name": "hex_bin", "label": "进制转换(带字节)", "icon": "🔃", "category": "encode" },
+        { "name": "zlib_gzip", "label": "Zlib/Gzip/Deflate压缩混淆", "icon": "🗜️", "category": "encode" },
+        { "name": "jwt_parse", "label": "JWT解析器", "icon": "🎫", "category": "encode" }
+      ]
+    },
+    {
+      "title": "编码查询",
+      "apps": [
+        { "name": "charset_list", "label": "编码列表", "icon": "📋", "category": "query" },
+        { "name": "ascii_table", "label": "ASCII编码表", "icon": "🔡", "category": "query" },
+        { "name": "gb2312_table", "label": "GB2312编码表", "icon": "🇨🇳", "category": "query" },
+        { "name": "gbk_table", "label": "GBK编码表", "icon": "🇨🇳", "category": "query" },
+        { "name": "gb18030_table", "label": "GB18030编码规则", "icon": "📜", "category": "query" },
+        { "name": "big5_table", "label": "Big5编码表", "icon": "🇹🇼", "category": "query" },
+        { "name": "unicode_table", "label": "Unicode编码规则", "icon": "🌐", "category": "query" },
+        { "name": "utf16_table", "label": "UTF-16编码表", "icon": "🔤", "category": "query" },
+        { "name": "emoji_list", "label": "Emoji表情符号", "icon": "😀", "category": "query" },
+        { "name": "symbol_list", "label": "特殊符号大全", "icon": "❓", "category": "query" }
+      ]
+    },
+    {
+      "title": "数字工具",
+      "apps": [
+        { "name": "ipv4_ipv6", "label": "IPv4与IPv6", "icon": "🌐", "category": "math" },
+        { "name": "rmb_convert", "label": "人民币大写转换", "icon": "💰", "category": "math" },
+        { "name": "unit_convert", "label": "单位换算", "icon": "📏", "category": "math" },
+        { "name": "size_convert", "label": "大小写转换", "icon": "🔠", "category": "math" },
+        { "name": "binary_sort", "label": "二进制排序", "icon": "🔢", "category": "math" },
+        { "name": "array_sort", "label": "数组排序", "icon": "📊", "category": "math" },
+        { "name": "number_sort", "label": "数字排序", "icon": "🔢", "category": "math" },
+        { "name": "md5_calc", "label": "MD5/SHA/HMAC计算", "icon": "🔐", "category": "math" },
+        { "name": "crc_calc", "label": "CRC/BCC/LRC校验", "icon": "✅", "category": "math" },
+        { "name": "file_hash", "label": "文件Hash计算", "icon": "📄", "category": "math" }
+      ]
+    },
+    {
+      "title": "文本工具",
+      "apps": [
+        { "name": "text_compare", "label": "文本对比", "icon": "🔍", "category": "text" },
+        { "name": "text_process", "label": "文本处理", "icon": "⚙️", "category": "text" },
+        { "name": "text_dedup", "label": "文本去重排序", "icon": "🚫", "category": "text" },
+        { "name": "text_split", "label": "文本分割", "icon": "✂️", "category": "text" },
+        { "name": "text_merge", "label": "文本合并", "icon": "🔗", "category": "text" },
+        { "name": "text_replace", "label": "文本释义", "icon": "🔄", "category": "text" },
+        { "name": "text_reverse", "label": "文本逆序", "icon": "🔄", "category": "text" },
+        { "name": "text_case", "label": "文本美化", "icon": "✨", "category": "text" },
+        { "name": "text_filter", "label": "文本行长过滤", "icon": "🚫", "category": "text" },
+        { "name": "text_length", "label": "文本行长统计", "icon": "📏", "category": "text" },
+        { "name": "punctuation_convert", "label": "标点符号转换", "icon": "❗", "category": "text" },
+        { "name": "keyboard_code", "label": "键盘转换代码", "icon": "⌨️", "category": "text" },
+        { "name": "letter_count", "label": "字数统计", "icon": "🔢", "category": "text" },
+        { "name": "regex_test", "label": "正则表达式", "icon": ".*", "category": "text" },
+        { "name": "tree_generate", "label": "目录树生成", "icon": "🌲", "category": "text" },
+        { "name": "upper_lower", "label": "英文字母大小写转换", "icon": "🔠", "category": "text" },
+        { "name": "chinese_pinyin", "label": "汉字转拼音转换", "icon": "拼音", "category": "text" }
+      ]
+    },
+    {
+      "title": "日期工具",
+      "apps": [
+        { "name": "unix_timestamp", "label": "Unix时间戳", "icon": "⏱️", "category": "date" },
+        { "name": "cron_expr", "label": "Cron表达式", "icon": "⏰", "category": "date" },
+        { "name": "world_clock", "label": "世界时间表", "icon": "🌍", "category": "date" },
+        { "name": "online_clock", "label": "在线秒表", "icon": "⏱️", "category": "date" },
+        { "name": "date_calc", "label": "日期计算器", "icon": "📅", "category": "date" },
+        { "name": "age_calc", "label": "年龄计算器", "icon": "🎂", "category": "date" },
+        { "name": "calendar", "label": "日历万年历", "icon": "📆", "category": "date" },
+        { "name": "lunar_convert", "label": "公历农历转换", "icon": "📅", "category": "date" },
+        { "name": "constellation", "label": "公历历年查询", "icon": "🔮", "category": "date" },
+        { "name": "zodiac_lunar", "label": "农历属相查询", "icon": "🐉", "category": "date" }
+      ]
+    },
+    {
+      "title": "HTML工具",
+      "apps": [
+        { "name": "html_download", "label": "HTML下载", "icon": "⬇️", "category": "html" },
+        { "name": "meta_extract", "label": "MetaTag提取", "icon": "🏷️", "category": "html" },
+        { "name": "html_filter", "label": "HTML标签过滤", "icon": "🚫", "category": "html" },
+        { "name": "html_format_tool", "label": "HTML格式化", "icon": "📝", "category": "html" },
+        { "name": "text_html_table", "label": "文本转HTML表格", "icon": "📊", "category": "html" },
+        { "name": "html_run", "label": "HTML在线运行", "icon": "🖥️", "category": "html" },
+        { "name": "markdown_edit", "label": "Markdown在线编辑", "icon": "✍️", "category": "html" },
+        { "name": "html_entity", "label": "HTML转义字符", "icon": "🔄", "category": "html" }
+      ]
+    },
+    {
+      "title": "HTTP工具",
+      "apps": [
+        { "name": "my_ip", "label": "我的外网IP地址", "icon": "🌐", "category": "http" },
+        { "name": "my_ua", "label": "我的浏览器信息", "icon": "💻", "category": "http" },
+        { "name": "http_download", "label": "HTTP下载", "icon": "⬇️", "category": "http" },
+        { "name": "http_request", "label": "HTTP模拟请求", "icon": "📡", "category": "http" },
+        { "name": "site_status", "label": "网页实时刷新", "icon": "🔄", "category": "http" },
+        { "name": "port_check", "label": "服务器端口开放检测", "icon": "🔌", "category": "http" },
+        { "name": "ssl_check", "label": "SSL证书检测", "icon": "🔒", "category": "http" },
+        { "name": "whois_query", "label": "域名Whois查询", "icon": "❓", "category": "http" },
+        { "name": "dns_query", "label": "域名DNS查询", "icon": "🌐", "category": "http" },
+        { "name": "http_method", "label": "HTTP状态查询", "icon": "📊", "category": "http" },
+        { "name": "http_mime", "label": "HTTP请求方式", "icon": "📁", "category": "http" },
+        { "name": "http_mimetype", "label": "HTTPMimeType", "icon": "📄", "category": "http" }
+      ]
+    },
+    {
+      "title": "图片工具",
+      "apps": [
+        { "name": "rgb_convert", "label": "RGB颜色代码转换", "icon": "🎨", "category": "image" },
+        { "name": "color_picker", "label": "颜色吸色工具", "icon": "💧", "category": "image" },
+        { "name": "screen_picker", "label": "屏幕颜色拾取", "icon": "🖥️", "category": "image" },
+        { "name": "img_color", "label": "图片颜色拾取", "icon": "🖼️", "category": "image" },
+        { "name": "img_icon", "label": "图片转Icon图标", "icon": "🔄", "category": "image" },
+        { "name": "img_round", "label": "九宫格图片裁剪", "icon": "🖼️", "category": "image" },
+        { "name": "img_resize", "label": "图片大小裁剪", "icon": "📏", "category": "image" },
+        { "name": "img_custom", "label": "图片自定义大小", "icon": "📐", "category": "image" },
+        { "name": "img_compress", "label": "图片压缩", "icon": "🗜️", "category": "image" },
+        { "name": "img_convert", "label": "图片格式转换", "icon": "🔄", "category": "image" },
+        { "name": "img_base64", "label": "图片与Base64转换", "icon": "🔢", "category": "image" },
+        { "name": "img_ps", "label": "在线Photoshop", "icon": "🎨", "category": "image" },
+        { "name": "svg_edit", "label": "SVG编辑器", "icon": "✍️", "category": "image" },
+        { "name": "img_clipboard", "label": "冷缩图剪贴板", "icon": "📋", "category": "image" },
+        { "name": "img_text", "label": "文字生成图片", "icon": "🖼️", "category": "image" },
+        { "name": "font_preview", "label": "字体预览", "icon": "🔤", "category": "image" }
+      ]
+    },
+    {
+      "title": "条形码和二维码工具",
+      "apps": [
+        { "name": "barcode_qr", "label": "条形码和二维码识别", "icon": "🔍", "category": "barcode" },
+        { "name": "qr_gen", "label": "二维码生成", "icon": "📷", "category": "barcode" },
+        { "name": "barcode_gen", "label": "条形码生成", "icon": "📊", "category": "barcode" }
+      ]
+    },
+    {
+      "title": "SSL证书",
+      "apps": [
+        { "name": "ssl_check_tool", "label": "SSL证书检测", "icon": "🔒", "category": "ssl" },
+        { "name": "ssl_analyze", "label": "SSL证书解析", "icon": "📄", "category": "ssl" },
+        { "name": "ssl_pfx", "label": "PK转PFX", "icon": "🔑", "category": "ssl" },
+        { "name": "ssl_generate", "label": "SSL证书生成", "icon": "📄", "category": "ssl" }
+      ]
+    },
+    {
+      "title": "哈希算法",
+      "apps": [
+        { "name": "md5_gen", "label": "MD5加密", "icon": "🔐", "category": "hash" },
+        { "name": "sha_gen", "label": "SHA加密", "icon": "🔐", "category": "hash" },
+        { "name": "hmac_md5", "label": "HMAC-MD5加密", "icon": "🔐", "category": "hash" },
+        { "name": "hmac_sha", "label": "HMAC-SHA加密", "icon": "🔐", "category": "hash" },
+        { "name": "sha3_gen", "label": "SHA3加密", "icon": "🔐", "category": "hash" },
+        { "name": "ripemd160", "label": "RIPEMD160加密", "icon": "🔐", "category": "hash" },
+        { "name": "crc_check", "label": "CRC检验", "icon": "✅", "category": "hash" },
+        { "name": "bcc_lrc", "label": "BCC/LRC校验", "icon": "✅", "category": "hash" }
+      ]
+    },
+    {
+      "title": "对称加密解密",
+      "apps": [
+        { "name": "sm4_crypt", "label": "SM4加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "des_crypt", "label": "DES加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "triple_des", "label": "TripleDES加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "aes_crypt", "label": "AES加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "rc2_crypt", "label": "RC2加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "rc4_crypt", "label": "RC4加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "rc5_crypt", "label": "RC5加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "rc6_crypt", "label": "RC6加密解密", "icon": "🔐", "category": "crypto" },
+        { "name": "blowfish", "label": "Blowfish加密解密", "icon": "🐟", "category": "crypto" },
+        { "name": "rabbit_crypt", "label": "Rabbit加密解密", "icon": "🐇", "category": "crypto" },
+        { "name": "xcrypt_crypt", "label": "XOR异或加密解密", "icon": "🔀", "category": "crypto" },
+        { "name": "morse_crypt", "label": "摩斯密码", "icon": "📡", "category": "crypto" },
+        { "name": "atbash_crypt", "label": "栅栏密码加密解密", "icon": "🚧", "category": "crypto" }
+      ]
+    },
+    {
+      "title": "非对称加密解密",
+      "apps": [
+        { "name": "rsa_crypt", "label": "RSA", "icon": "🔑", "category": "asymmetric" },
+        { "name": "sm2_crypt", "label": "SM2", "icon": "🔐", "category": "asymmetric" }
+      ]
+    },
+    {
+      "title": "随机数工具",
+      "apps": [
+        { "name": "random_num", "label": "随机数生成器", "icon": "🎲", "category": "random" },
+        { "name": "random_str", "label": "随机密码生成器", "icon": "🔑", "category": "random" },
+        { "name": "guid_gen", "label": "GUID生成器", "icon": "🆔", "category": "random" }
+      ]
+    },
+    {
+      "title": "设备辅助测试",
+      "apps": [
+        { "name": "keyboard_test", "label": "键盘按键测试", "icon": "⌨️", "category": "device" },
+        { "name": "keycode_query", "label": "键盘KeyCode值", "icon": "🔢", "category": "device" },
+        { "name": "mouse_test", "label": "鼠标按键测试", "icon": "🖱️", "category": "device" },
+        { "name": "mic_test", "label": "麦克风测试", "icon": "🎙️", "category": "device" },
+        { "name": "camera_test", "label": "摄像头测试", "icon": "📷", "category": "device" },
+        { "name": "screen_test", "label": "屏幕测试", "icon": "🖥️", "category": "device" }
+      ]
+    },
+    {
+      "title": "软件下载",
+      "apps": [
+        { "name": "win11_dl", "label": "Windows11操作系统", "icon": "⬇️", "category": "download" },
+        { "name": "win10_dl", "label": "Windows10操作系统", "icon": "⬇️", "category": "download" },
+        { "name": "win7_dl", "label": "Windows7操作系统", "icon": "⬇️", "category": "download" },
+        { "name": "office_dl", "label": "WindowsOffice", "icon": "⬇️", "category": "download" },
+        { "name": "xiaoduo_dl", "label": "小黄豆一键下载助手", "icon": "⬇️", "category": "download" },
+        { "name": "xiaoduo_doc_dl", "label": "小黄豆一素材下载助手", "icon": "⬇️", "category": "download" }
+      ]
+    },
+    {
+      "title": "其他工具",
+      "apps": [
+        { "name": "search_nav", "label": "搜索导航", "icon": "🔍", "category": "other" },
+        { "name": "qr_content", "label": "剪贴板内容查看", "icon": "📋", "category": "other" }
+      ]
+    },
+    {
+      "title": "娱乐工具",
+      "apps": [
+        { "name": "tt_day_challenge", "label": "11Day挑战", "icon": "🔥", "category": "entertainment" },
+        { "name": "game_1024", "label": "1024", "icon": "🔢", "category": "entertainment" },
+        { "name": "game_2048", "label": "2048", "icon": "🔢", "category": "entertainment" },
+        { "name": "game_rubiks", "label": "三阶魔方", "icon": "🧊", "category": "entertainment" },
+        { "name": "game_gobang", "label": "五子棋", "icon": "⚫", "category": "entertainment" },
+        { "name": "game_jump", "label": "指尖陀螺", "icon": "🌀", "category": "entertainment" },
+        { "name": "game_bounce", "label": "弹跳小球", "icon": "⚽", "category": "entertainment" },
+        { "name": "game_reflex", "label": "反应时间测试", "icon": "⏱️", "category": "entertainment" },
+        { "name": "game_empire", "label": "黑客帝国文字雨", "icon": "🌧️", "category": "entertainment" }
       ]
     }
   ]
