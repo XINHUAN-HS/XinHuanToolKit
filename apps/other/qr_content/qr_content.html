@@ -3,42 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>剪贴板内容查看</title>
+    <title>剪切板内容查看工具 v1.0</title>
     <link rel="stylesheet" href="qr_content.css">
-    <style>
-        body {
-            background: #000;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        h1 {
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-            margin-bottom: 30px;
-        }
-        .content {
-            background: rgba(0, 20, 0, 0.8);
-            border: 1px solid #00ff41;
-            padding: 25px;
-            border-radius: 5px;
-            max-width: 800px;
-            width: 90%;
-        }
-    </style>
 </head>
 <body>
-    <h1>剪贴板内容查看</h1>
-    <div class="content">
-        <p>类别：其他工具</p>
-        <p>功能开发中...</p>
+    <div class="container">
+        <!-- 头部标题 -->
+        <header class="header">
+            <h1>> 剪切板内容查看工具 v1.0</h1>
+            <p class="subtitle">[系统] 等待粘贴内容...</p>
+        </header>
+
+        <!-- 粘贴区域 -->
+        <main class="drop-zone" id="dropZone" contenteditable="true">
+            <div class="icon">📋</div>
+            <p class="hint">点击此处或按 <kbd>Ctrl+V</kbd> / <kbd>⌘+V</kbd> 粘贴</p>
+            <p class="sub-hint">支持文本、图片、文件等多种格式</p>
+        </main>
+
+        <!-- 结果展示区域 -->
+        <section class="results" id="results"></section>
     </div>
+
     <script src="qr_content.js"></script>
 </body>
 </html>
