@@ -5,17 +5,47 @@
     box-sizing: border-box;
 }
 
+/* ---------- 赛博朋克主题 ---------- */
 body {
-    height: 100vh;
+    background-color: #000 !important;
+    color: #00ff41 !important;
+    font-family: 'Courier New', monospace !important;
+    margin: 0;
+    padding: 10px;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+a { 
+    color: #00ffff; 
+    text-decoration: none;
+}
+
+a:hover {
+    text-shadow: 0 0 8px #00ffff;
+}
+
+::-webkit-scrollbar { 
+    width: 4px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: rgba(0,20,0,0.5); 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: #00ff41; 
+    border-radius: 2px; 
+}
+
+/* ---------- 主容器 ---------- */
 .search-wrapper {
     width: 90%;
     max-width: 660px;
     text-align: center;
+    position: relative;
 }
 
 /* ---------- 搜索框容器 ---------- */
@@ -25,24 +55,47 @@ body {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-radius: 56px;
-    border: 2px solid #00ff41;   /* 荧光绿边框 */
+    border: 2px solid #00ff41;
     padding: 4px 8px 4px 16px;
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);  /* 初始微光 */
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.05);
     transition: all 0.35s ease;
-    background: rgba(0, 0, 0, 0.85);  /* 半透明黑底，增强层次 */
+    background: rgba(0, 0, 0, 0.85);
+    position: relative;
+    overflow: hidden;
+}
+
+.search-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.search-container:hover::before {
+    left: 100%;
 }
 
 .search-container:hover {
-    box-shadow: 0 0 40px #00ff41, 0 0 80px rgba(0, 255, 65, 0.2);  /* 双层发光 */
+    box-shadow: 0 0 40px #00ff41, 
+                0 0 80px rgba(0, 255, 65, 0.2),
+                inset 0 0 30px rgba(0, 255, 65, 0.1);
     border-color: #00ff41;
+    transform: translateY(-2px);
 }
 
 .search-container:focus-within {
-    box-shadow: 0 0 60px #00ff41, 0 0 120px rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 60px #00ff41, 
+                0 0 120px rgba(0, 255, 65, 0.3),
+                inset 0 0 40px rgba(0, 255, 65, 0.15);
     background: rgba(0, 0, 0, 0.92);
 }
 
-/* 左侧放大镜 + 引擎名称（可点击区域） */
+/* ---------- 左侧图标区域 ---------- */
 .left-icons {
     display: flex;
     align-items: center;
@@ -52,28 +105,32 @@ body {
     border-radius: 999px;
     flex-shrink: 0;
     user-select: none;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+    position: relative;
 }
 
 .left-icons:hover {
-    background-color: #00ff4062;   /* 荧光绿悬停背景 */
+    background-color: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
 }
 
 .magnifier {
     width: 22px;
     height: 22px;
-    fill: #00ff41;   /* 荧光绿图标 */
+    fill: #00ff41;
+    filter: drop-shadow(0 0 3px #00ff41);
 }
 
 .engine-label {
     font-size: 14px;
     font-weight: 700;
-    color: #00ff41;   /* 荧光绿文字 */
+    color: #00ff41;
     line-height: 1;
     letter-spacing: 0.5px;
+    text-shadow: 0 0 5px #00ff41;
 }
 
-/* 输入框 */
+/* ---------- 输入框 ---------- */
 .search-input {
     flex: 1;
     height: 48px;
@@ -81,18 +138,19 @@ body {
     outline: none;
     background: transparent;
     font-size: 18px;
-    color: #00ff41;   /* 白色文字，在黑底上清晰 */
+    color: #00ff41;
     padding: 0 14px;
-    caret-color: #00ff41;  /* 光标也是荧光绿 */
+    caret-color: #00ff41;
+    font-family: 'Courier New', monospace;
 }
 
 .search-input::placeholder {
-    color: rgba(0, 255, 65, 0.45);  /* 半透荧光绿占位符 */
+    color: rgba(0, 255, 65, 0.45);
     font-weight: 300;
     letter-spacing: 0.3px;
 }
 
-/* ---------- 引擎按钮区域（默认隐藏） ---------- */
+/* ---------- 引擎按钮区域 ---------- */
 .engine-selector {
     margin-top: 26px;
     display: none;
@@ -100,6 +158,11 @@ body {
     gap: 12px;
     flex-wrap: wrap;
     animation: fadeIn 0.3s ease-out;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 16px;
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
 }
 
 .engine-selector.show {
@@ -111,54 +174,82 @@ body {
     font-size: 14px;
     font-weight: 550;
     border-radius: 30px;
-    border: 1.5px solid #00ff41;   /* 荧光绿边框 */
-    background: rgba(0, 0, 0, 0.75);  /* 半透黑底 */
+    border: 1.5px solid #00ff41;
+    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    color: #00ff41;   /* 荧光绿文字 */
+    color: #00ff41;
     cursor: pointer;
     transition: all 0.25s ease;
     box-shadow: 0 2px 10px rgba(0, 255, 65, 0.08);
     letter-spacing: 0.3px;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+.engine-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+    transition: left 0.3s ease;
+}
+
+.engine-btn:hover::before {
+    left: 100%;
 }
 
 .engine-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 255, 65, 0.25);
-    background: rgba(0, 255, 65, 0.15);  /* 轻微荧光绿背景 */
+    background: rgba(0, 255, 65, 0.15);
     border-color: #00ff41;
+    text-shadow: 0 0 8px #00ff41;
 }
 
 .engine-btn.active {
-    background: #00ff41;   /* 实心荧光绿 */
-    color: #000000;        /* 黑色文字，高对比 */
+    background: #00ff41;
+    color: #000000;
     border-color: #00ff41;
     box-shadow: 0 4px 16px rgba(0, 255, 65, 0.5);
+    text-shadow: none;
 }
 
-/* 小屏适配 */
+/* ---------- 响应式设计 ---------- */
 @media (max-width: 560px) {
+    body {
+        padding: 20px 10px;
+    }
+    
     .search-container {
         padding: 4px 6px 4px 12px;
     }
+    
     .search-input {
         font-size: 16px;
         height: 44px;
     }
+    
     .magnifier {
         width: 18px;
         height: 18px;
     }
+    
     .engine-label {
         font-size: 13px;
     }
+    
     .engine-btn {
         padding: 8px 16px;
         font-size: 13px;
     }
 }
 
-/* 动画 */
+/* ---------- 动画 ---------- */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -168,4 +259,36 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+/* ---------- 终端闪烁效果 ---------- */
+.engine-label::after {
+    content: '_';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
