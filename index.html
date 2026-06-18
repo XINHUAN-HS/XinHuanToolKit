@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>科幻终端工具箱</title>
+    <title>XinHuanToolKit</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="terminal-container">
     <!-- 顶部栏 -->
     <div class="top-bar">
-        <div class="logo">[ SYS_TERMINAL ]</div>
+        <div class="logo">[ XINHUAN_TOOLKIT ]</div>
         <div class="status">
             <span>● 系统运行中</span>
             <span>● 网络连接</span>
@@ -26,8 +27,8 @@
         <!-- CPU -->
         <div class="dynamic-group">
             <div class="chart-container">
-                <svg class="chart-svg" viewBox="0 0 260 66">
-                    <polyline class="chart-line" points="0,40 20,30 40,38 60,22 80,28 100,18 120,33 140,12 160,24 180,8 200,16 220,5 240,12 260,10"/>
+                <svg class="chart-svg" viewBox="0 0 280 70">
+                    <polyline class="chart-line" id="cpuChartLine" points="0,40 20,30 40,38 60,22 80,28 100,18 120,33 140,12 160,24 180,8 200,16 220,5 240,12 260,10 280,14"/>
                 </svg>
             </div>
             <div class="value-row">
@@ -39,8 +40,8 @@
         <!-- 内存 -->
         <div class="dynamic-group">
             <div class="chart-container">
-                <svg class="chart-svg" viewBox="0 0 260 66">
-                    <polyline class="chart-line" points="0,46 20,34 40,43 60,27 80,33 100,19 120,37 140,15 160,28 180,10 200,20 225,7 245,14 260,18"/>
+                <svg class="chart-svg" viewBox="0 0 280 70">
+                    <polyline class="chart-line" id="memChartLine" points="0,46 20,34 40,43 60,27 80,33 100,19 120,37 140,15 160,28 180,10 200,20 225,7 245,14 260,18 280,12"/>
                 </svg>
             </div>
             <div class="memory-bars">
@@ -55,8 +56,8 @@
         <!-- 磁盘 -->
         <div class="dynamic-group">
             <div class="chart-container">
-                <svg class="chart-svg" viewBox="0 0 260 66">
-                    <polyline class="chart-line" points="0,54 20,47 40,51 60,38 82,44 102,29 122,48 142,22 162,36 182,14 204,25 224,8 244,16 262,20"/>
+                <svg class="chart-svg" viewBox="0 0 280 70">
+                    <polyline class="chart-line" id="diskChartLine" points="0,54 20,47 40,51 60,38 82,44 102,29 122,48 142,22 162,36 182,14 204,25 224,8 244,16 264,20 284,18"/>
                 </svg>
             </div>
             <div class="memory-bars">
@@ -84,16 +85,16 @@
                 <span class="info-label">DNS</span>
                 <span class="info-value">8.8.8.8</span>
             </div>
-            <div class="info-row"><span>上行流量</span><span>1.2 MB/s</span></div>
-            <div class="info-row"><span>下行流量</span><span>3.7 MB/s</span></div>
+            <div class="info-row"><span>上行流量</span><span id="upSpeed">1.2 MB/s</span></div>
+            <div class="info-row"><span>下行流量</span><span id="downSpeed">3.7 MB/s</span></div>
+            <div class="info-row"><span>活跃连接</span><span id="activeConnections">23</span></div>
+            <div class="info-row"><span>开放端口</span><span id="openPorts">22, 80, 443</span></div>
         </div>
         <div class="traffic-chart">
-            <svg class="traffic-svg" viewBox="0 0 270 76">
-                <polyline class="traffic-line" points="0,58 20,46 40,53 61,36 81,42 101,28 121,47 141,22 161,35 181,14 201,25 221,10 241,18 261,8 271,12"/>
+            <svg class="traffic-svg" viewBox="0 0 285 78">
+                <polyline class="traffic-line" id="trafficChartLine" points="0,58 20,46 40,53 61,36 81,42 105,28 126,47 146,22 166,35 186,14 206,25 226,10 246,18 266,8 286,12"/>
             </svg>
         </div>
-        <div class="info-row"><span>活跃连接</span><span>23</span></div>
-        <div class="info-row"><span>开放端口</span><span>22, 80, 443</span></div>
     </div>
 
     <!-- 中央区域 -->
@@ -102,26 +103,31 @@
             <div class="tab active" data-tab="terminal">本地终端</div>
         </div>
         <div class="view-container" id="viewContainer">
+            <!-- 终端视图 -->
             <div class="view-content active" id="terminalView">
                 <div class="terminal-output" id="terminalOutput">
-root@cyber:~$ █
+root@xinhuan:~$ █
                 </div>
                 <div class="terminal-input">
                     <span class="prompt">$</span>
                     <input type="text" class="input-field" id="commandInput" placeholder="输入命令...">
                 </div>
             </div>
+            <!-- 应用视图（iframe） -->
             <div class="view-content" id="appView">
-                <iframe id="appFrame" src="" frameborder="0"></iframe>
+                <iframe id="appFrame" src="" frameborder="0" style="width:100%;height:100%;border:none;background:#000;"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- 右侧文件系统面板（由 JS 动态生成） -->
-    <div class="sidebar filesystem-panel">
-        <div class="panel-title">◆ 文件系统 ◆</div>
-        <div id="fileCategories"></div>
+    <!-- 右侧文件系统面板 -->
+<div class="sidebar filesystem-panel">
+    <div class="panel-title">◆ 文件系统 ◆</div>
+    <div class="search-box">
+        <input type="text" id="appSearch" placeholder="搜索应用..." autocomplete="off">
     </div>
+    <div id="fileCategories"></div>
+</div>
 
     <!-- 底部键盘 -->
     <div class="bottom-panel">
