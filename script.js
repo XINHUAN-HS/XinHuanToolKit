@@ -102,6 +102,15 @@ function processCommand(input) {
                 openAppByName(category, appName);
             }
             break;
+        case 'close':
+            if (parts.length < 3) {
+                appendOutput('用法: close [类别名称] [应用名称]');
+            } else {
+                const category = parts[1].toLowerCase();
+                const appName = parts[2].toLowerCase();
+                closeAppByName(category, appName);
+            }
+            break;
         default:
             appendOutput(`未知命令: ${command}\n输入 help 查看可用命令`);
     }
@@ -114,7 +123,9 @@ function showHelp() {
         '  list                          - 列出所有类别和应用\n' +
         '  clear                         - 清屏\n' +
         '  open [类别] [应用名]          - 打开指定应用\n' +
-        '例如: open system home'
+        '  close [类别] [应用名]         - 关闭指定应用\n' +
+        '例如: open system home\n' +
+        '       close system home'
     );
 }
 
@@ -158,11 +169,46 @@ function openAppByName(category, appName) {
     appendOutput(`正在打开: ${cat.title} > ${app.label}`);
 }
 
+function closeAppByName(category, appName) {
+    if (!appConfigCache) {
+        appendOutput('应用配置尚未加载');
+        return;
+    }
+    const cat = appConfigCache.categories.find(c =>
+        c.title.toLowerCase() === category ||
+        c.title.includes(category)
+    );
+    if (!cat) {
+        appendOutput(`未找到类别: ${category}`);
+        return;
+    }
+    const app = cat.apps.find(a =>
+        a.name.toLowerCase() === appName ||
+        a.label.toLowerCase() === appName
+    );
+    if (!app) {
+        appendOutput(`在类别 ${cat.title} 中未找到应用: ${appName}`);
+        return;
+    }
+    
+    // 查找对应的标签页并关闭
+    const tab = document.querySelector(`.tab[data-tab="${app.name}"]`);
+    if (tab) {
+        closeTab(tab);
+        appendOutput(`已关闭应用: ${cat.title} > ${app.label}`);
+    } else {
+        appendOutput(`未找到应用标签页: ${app.name}`);
+    }
+}
+
 // ========== 标签页管理 ==========
 const tabContainer = document.getElementById('tabContainer');
 const appFrame = document.getElementById('appFrame');
 const terminalView = document.getElementById('terminalView');
 const appView = document.getElementById('appView');
+
+// 存储每个应用的 iframe 状态
+const appIframes = {};
 
 function openApp(name, category) {
     const exist = document.querySelector(`.tab[data-tab="${name}"]`);
@@ -176,14 +222,10 @@ function openApp(name, category) {
     const termTab = document.querySelector('.tab[data-tab="terminal"]');
     tabContainer.insertBefore(tab, termTab.nextSibling);
 
+    // 创建独立的 iframe 容器（隐藏）
+    createAppIframe(name, category);
+
     switchToTab(tab);
-
-    const url = `./apps/${category}/${name}.html`;
-    appFrame.src = url;
-
-    appFrame.onload = function() {
-        injectIntoIframe();
-    };
 
     tab.querySelector('.close-btn').addEventListener('click', e => {
         e.stopPropagation();
@@ -196,9 +238,35 @@ function openApp(name, category) {
     });
 }
 
-function injectIntoIframe() {
+function createAppIframe(name, category) {
+    // 检查是否已存在该应用的 iframe
+    if (appIframes[name]) return;
+    
+    // 创建 iframe 元素
+    const iframe = document.createElement('iframe');
+    iframe.id = `appFrame_${name}`;
+    iframe.style.cssText = 'width:100%;height:100%;border:none;background:#000;display:none;';
+    iframe.dataset.appName = name;
+    
+    // 设置 src
+    const url = `./apps/${category}/${name}.html`;
+    iframe.src = url;
+    
+    // 添加到 appView 中
+    appView.appendChild(iframe);
+    
+    // 存储引用
+    appIframes[name] = iframe;
+    
+    // 注入脚本
+    iframe.onload = function() {
+        injectIntoIframe(iframe);
+    };
+}
+
+function injectIntoIframe(iframe) {
     try {
-        const iframeDoc = appFrame.contentDocument || appFrame.contentWindow.document;
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
         if (iframeDoc.getElementById('__injected_keyboard_script')) return;
 
         const script = iframeDoc.createElement('script');
@@ -241,9 +309,24 @@ function switchToTab(tab) {
     if (tab.dataset.tab === 'terminal') {
         terminalView.classList.add('active');
         appView.classList.remove('active');
+        
+        // 隐藏所有应用 iframe
+        Object.values(appIframes).forEach(iframe => {
+            iframe.style.display = 'none';
+        });
     } else {
         terminalView.classList.remove('active');
         appView.classList.add('active');
+        
+        // 显示对应的应用 iframe
+        const appName = tab.dataset.tab;
+        Object.keys(appIframes).forEach(key => {
+            if (key === appName) {
+                appIframes[key].style.display = 'block';
+            } else {
+                appIframes[key].style.display = 'none';
+            }
+        });
     }
 }
 
@@ -252,12 +335,30 @@ function closeTab(tab) {
         const termTab = document.querySelector('.tab[data-tab="terminal"]');
         switchToTab(termTab);
     }
+    
+    // 移除对应的 iframe
+    const appName = tab.dataset.tab;
+    if (appIframes[appName]) {
+        appIframes[appName].remove();
+        delete appIframes[appName];
+    }
+    
     tab.remove();
-    if (!document.querySelector('.tab:not([data-tab="terminal"])')) {
-        appFrame.src = '';
+}
+
+// 初始化时激活终端标签并绑定点击事件
+function initTerminalTab() {
+    const termTab = document.querySelector('.tab[data-tab="terminal"]');
+    if (termTab) {
+        termTab.addEventListener('click', function(e) {
+            if (e.target.classList.contains('close-btn')) return;
+            switchToTab(this);
+        });
     }
 }
 
+// 初始化
+initTerminalTab();
 switchToTab(document.querySelector('.tab[data-tab="terminal"]'));
 
 // ========== 从外部 apps.json 加载应用配置 ==========
