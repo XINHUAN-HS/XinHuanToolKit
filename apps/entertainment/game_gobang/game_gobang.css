@@ -1,2 +1,141 @@
-/* 五子棋 样式 */
-.content { line-height: 1.6; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2vmin;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vmin;
+    width: 100%;
+    max-width: 630px;
+}
+
+.header {
+    text-align: center;
+}
+
+.header h1 {
+    font-size: clamp(24px, 5vmin, 40px);
+    text-shadow: 0 0 8px #00ff41;
+    letter-spacing: 4px;
+}
+
+/* 模式选择与回合状态 – 同一行 */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2vmin;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 500px;
+}
+
+.mode-btn {
+    background: transparent;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    padding: 6px 14px;
+    font-family: inherit;
+    font-size: clamp(12px, 2vmin, 16px);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.mode-btn.active {
+    background-color: #00ff41;
+    color: #000;
+    box-shadow: 0 0 10px #00ff41;
+}
+
+.status-text {
+    font-size: clamp(14px, 2.5vmin, 19px);
+    letter-spacing: 2px;
+    border: 1px dashed #00ff41;
+    padding: 4px 16px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.board-wrapper {
+    width: min(86vmin, 470px);
+    aspect-ratio: 1;
+    border: 1px solid #00ff41;
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a;
+    cursor: pointer;
+    display: block;
+    touch-action: manipulation;
+}
+
+.controls {
+    display: flex;
+    gap: 3vmin;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 470px;
+}
+
+.btn {
+    background: transparent;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    padding: clamp(8px, 2vmin, 12px) clamp(20px, 5vmin, 36px);
+    font-family: inherit;
+    font-size: clamp(14px, 2.5vmin, 18px);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #00ff41;
+    letter-spacing: 1px;
+    flex: 1;
+    min-width: 100px;
+}
+
+.btn:hover {
+    background-color: #00ff41;
+    color: #000;
+    box-shadow: 0 0 15px #00ff41;
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* 小屏适配 */
+@media (max-width: 380px) {
+    .top-bar {
+        gap: 1vmin;
+    }
+    .mode-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    .status-text {
+        padding: 2px 8px;
+        font-size: 12px;
+    }
+}
