@@ -331,13 +331,24 @@ function switchToTab(tab) {
 }
 
 function closeTab(tab) {
+    // 新增：输出 close 命令
+    const appName = tab.dataset.tab;
+    if (appName && appName !== 'terminal' && appConfigCache) {
+        for (const cat of appConfigCache.categories) {
+            const app = cat.apps.find(a => a.name === appName);
+            if (app) {
+                appendOutput(`root@xinhuan:~$ close ${cat.title} ${app.label} █`);
+                break;
+            }
+        }
+    }
+
     if (tab.classList.contains('active')) {
         const termTab = document.querySelector('.tab[data-tab="terminal"]');
         switchToTab(termTab);
     }
     
     // 移除对应的 iframe
-    const appName = tab.dataset.tab;
     if (appIframes[appName]) {
         appIframes[appName].remove();
         delete appIframes[appName];
@@ -407,6 +418,8 @@ function renderFileCategories(categories) {
             icon.innerHTML = `<i>${app.icon}</i><span>${app.label}</span>`;
 
             icon.addEventListener('click', () => {
+                // 新增：在打开前输出 open 命令
+                appendOutput(`root@xinhuan:~$ open ${cat.title} ${app.label} █`);
                 openApp(app.name, app.category);
             });
 
