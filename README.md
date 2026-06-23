@@ -112,7 +112,3 @@ document.getElementById('cpuUsage').innerText = data.cpu + '%';
 1. **安全性**：本项目仅为前端 UI 演示，**不具备**真实的系统控制权限。
 2. **兼容性**：部分 CSS 特性（如 `backdrop-filter`）在旧版浏览器中可能不兼容。
 3. **Iframe**：应用视图使用 Iframe 加载，请确保目标地址允许跨域访问（CORS）。
-
-## 📜 License
-
-MIT License. See `LICENSE` for details.
